@@ -12,6 +12,9 @@ import java.security.cert.X509Certificate;
 public class CuritibaWaterScraper {
     private static final String BASE_URL = "https://site.sanepar.com.br/paradas-no-abastecimento?name=Curitiba&as_sfid=AAAAAAYNYV0RaF097TGmQpXhMX1SPu3xNlJg-sSLfvu69218GC4ydtfj1t-MrZK8VtwZifdSMcBvEchz1bqcGp_0k1oNfdT1A8CnGNMkGgMOa1dLWMj4pVwc6JBztjqnkZAcSsw%3D&as_fid=af5df1b6ab8cf28d40652c176449132dfd41d12b";
 
+    private static final String NEIGHBORHOOD = "Boqueirão";
+
+
     public static void main(String[] args) {
         disableSSLVerification();
 
@@ -69,8 +72,8 @@ public class CuritibaWaterScraper {
                 String contentText = mainContent.text();
 
                 // Verificar a presença da palavra "Fanny"
-                if (contentText.toLowerCase().contains("tarumã")) {
-                    System.out.println("A palavra 'Tarumã' foi encontrada no conteúdo da página.");
+                if (contentText.toLowerCase().contains(NEIGHBORHOOD)) {
+                    System.out.println("O bairro " + NEIGHBORHOOD + " foi encontrado no conteúdo da página.");
 
                     // Busca parágrafos que contenham "reabastecimento" ou "normalização"
                     Elements paragraphs = mainContent.select("p");
@@ -79,11 +82,11 @@ public class CuritibaWaterScraper {
                     for (Element paragraph : paragraphs) {
                         String paragraphText = paragraph.text();
                         if (paragraphText.toLowerCase().contains("reabastecimento") || paragraphText.toLowerCase().contains("normalização") || paragraphText.toLowerCase().contains("abastecimento")) {
-                            System.out.println("Parágrafo encontrado: " + paragraphText);
+                            System.out.println("INFORMAÇÃO: " + paragraphText);
                         }
                     }
                 } else {
-                    System.out.println("A palavra 'Tarumã' não foi encontrada no conteúdo da página.");
+                    System.out.println("O bairro " + NEIGHBORHOOD + " não foi encontrado no conteúdo da página.");
                 }
             } else {
                 System.out.println("Conteúdo principal não encontrado.");
