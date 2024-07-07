@@ -15,6 +15,7 @@ public class ContentAnalyzerService {
         Element mainContent = doc.selectFirst("#content_inner");
         if (mainContent != null) {
             String contentText = mainContent.text();
+            System.out.println(contentText);
             if (contentText.toLowerCase().contains(neighborhood.toLowerCase())) {
                 infoList.addAll(analyzeWaterSupplyInfo(mainContent, neighborhood));
             }
@@ -32,7 +33,7 @@ public class ContentAnalyzerService {
             if (keywords.stream().anyMatch(paragraphText::contains)) {
                 WaterSupplyInfo info = new WaterSupplyInfo();
                 info.setNeighborhood(neighborhood);
-                info.setStatus("Afetado");
+                info.setStatus("afetado");
                 info.setDetails(paragraph.text());
                 infoList.add(info);
             }
