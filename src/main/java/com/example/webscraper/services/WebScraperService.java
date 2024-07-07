@@ -28,7 +28,9 @@ public class WebScraperService {
             List<WaterSupplyInfo> allInfo = new ArrayList<>();
             for (String section : Constants.SECTIONS) {
                 List<String> links = sectionChecker.checkSection(doc, section);
+                System.out.println("links length: " + links.size());
                 for (String link : links) {
+                    System.out.println("link: " + link);
                     allInfo.addAll(fetchLinkContent(link));
                 }
             }
@@ -47,7 +49,14 @@ public class WebScraperService {
     }
 
     private List<WaterSupplyInfo> fetchLinkContent(String url) throws IOException {
-        Document linkedDoc = contentRepository.fetchContent(url);
-        return contentAnalyzer.analyzeContent(linkedDoc, Constants.NEIGHBORHOOD);
+        try {
+            Document linkedDoc = contentRepository.fetchContent(url);
+            return contentAnalyzer.analyzeContent(linkedDoc, Constants.NEIGHBORHOOD);
+        } catch (IOException e) {
+            System.err.println("Erro ao buscar conteúdo: " + e.getMessage());
+            e.printStackTrace();
+            return List.of();
+        }
+
     }
 }
